@@ -5,15 +5,37 @@ var genre = require('./Routes/genre.js');
 var artist = require('./Routes/artist.js');
 var artistAlbum = require('./Routes/artistAlbum.js');
 var album = require('./Routes/album.js');
+var view = require('./Routes/view.js');
 var db = require('./models'); 
+var path = require('path'); 
+
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 //app.use(express.bodyParser());
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+//set path to static files
+app.use(express.static(__dirname + '/../public'));
+// Handle Errors gracefully
+app.use(function(err, req, res, next) {
+	if(!err) return next();
+	console.log(err.stack);
+	res.json({error: true});
+});
 
 nconf.file('./Configuration/settings.json');
 
+//Views 
+app.get('/', view.index);
+app.get('/partials/:name', view.partials);
+app.get('/views/scripts/:name', view.scripts);
+app.get('/images/:name', view.images);
+
+//REST actions
 app.get('/genres', genre.getgenres);
 app.get('/genres/:genreId', genre.getgenre);
 app.post('/genres', genre.creategenre);

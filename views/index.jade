@@ -1,0 +1,15 @@
+html(ng-app="artistsManager")
+  head
+    title My Site
+    script(src='/views/scripts/angular.js')
+    script(src='/views/scripts/app.js')
+    script(src='/views/scripts/controllers.js')
+  body
+    h1
+      - var abc = 'dddddd' 
+      a(href='http://www.franz-enzenhofer.com/') #{abc}
+    div(ng-controller="ArtistsListCtrl")
+      ul
+        li(ng-repeat="artist in artists") {{artist.name}}
+          p {{artist.snippet}}
+ 
