@@ -1,4 +1,7 @@
 {
-  "connectionString": "postgres://postgres:kizi1980@localhost:5432/postgres",
-  "port": "3000"
+  "connectionString": "postgres://yidjokowebmrfo:aZ_As7zhbkVowQdrD5yC8D7W8M@ec2-23-21-185-168.compute-1.amazonaws.com:5432/d97ipatr7bdqrp",
+  "port": "5000"
 }
+
+//"connectionString": "postgres://postgres:kizi1980@localhost:5432/postgres",
+//  "port": "3000"
