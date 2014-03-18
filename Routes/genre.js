@@ -5,8 +5,6 @@ exports.getgenres = function(req, res) {
     Genre.all()
       .success(function(genres)
       {
-        console.log(error);
-        console.dir(error);
         res.json(genres);
       })
       .error(function(error){
