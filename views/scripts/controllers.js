@@ -3,11 +3,12 @@ var artistsManagerControllers = angular.module('artistsManagerControllers', []);
 function ArtistsListCtrl($scope, $http)
 {
 	$scope.selectedArtist = null;
+	$scope.errors = new Object();
+	$scope.errors.createNewArtist = new Array();
 
 	$http.get('/metaData').
 		success(function(data){
 			$scope.metaData =  data;
-			console.dir(data);
   		}).
   		error (function(data, status, headers, config){
 			alert ('error: ' + status)
@@ -27,11 +28,17 @@ function ArtistsListCtrl($scope, $http)
 		$scope.selectedArtist = artist; 
 	};
 
-	$scope.createNewArtist = function (artistName, artistImageUrl) {
+	$scope.createNewArtist = function (artistName, artistImageUrl, newArtistGenreId) {
+		validateCreateNewArtist(artistName, artistImageUrl, newArtistGenreId);
+		if ($scope.errors.createNewArtist.length > 0)
+		{
+			return;
+		}
+
 		$http.post('/artists', 
 			{ 
 				name: artistName, 
-				genreId: 60,
+				genreId: newArtistGenreId.id,
 				imageUrl: artistImageUrl
 			}).
 			success(function(data){
@@ -40,6 +47,18 @@ function ArtistsListCtrl($scope, $http)
 			error (function(data, status, headers, config){
 				alert ('error: ' + status)
   			});
+	};
+
+	validateCreateNewArtist = function(artistName, artistImageUrl, newArtistGenreId){
+		$scope.errors.createNewArtist.length = 0;
+		if (artistName == undefined || artistName == null)
+		{
+			$scope.errors.createNewArtist.push('Add a value to artist name field.');
+		}
+		if (newArtistGenreId == undefined || newArtistGenreId == null)// || !angular.isNumber(newArtistGenreId)
+		{
+			$scope.errors.createNewArtist.push('Select Genre for the new artist.');
+		}
 	};
 
 	$scope.updateArtist = function (updatedArtistImageUrl) {

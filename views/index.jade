@@ -30,7 +30,7 @@ html(ng-app='artistsManagerApp')
             li(class="artistsPane listItem" ng-repeat="artist in artists | filter:query | filter:{genreId:genre.id} | orderBy:artistsOrderProp") 
               a(href="" ng-click="getAlbums(artist)") {{artist.name}}
                 img(ng-src="{{artist.imageUrl}}" style="width:60px;")
-        div(class="artistsPane updateExisting")
+        div(class="artistsPane updateExisting" ng-hide="selectedArtist == null")
           h4 Update {{selectedArtist.name}}
           label Image Url
           input(ng-model="existingArtistImageUrl")
@@ -41,8 +41,13 @@ html(ng-app='artistsManagerApp')
           input(ng-model="newArtistName")
           label Image Url
           input(ng-model="newArtistImageUrl")
-          input(type="button" value="Create" ng-click="createNewArtist(newArtistName, newArtistImageUrl)")
-
+          select(ng-model="newArtistGenreId" ng-options="g.name for g in metaData.genres")
+            option(value="") -- choose genre --
+          input(type="button" value="Create" ng-click="createNewArtist(newArtistName, newArtistImageUrl, newArtistGenreId)")
+          span(class="paneError" ng-hide="!errors || !errors.createNewArtist || errors.createNewArtist.length == 0")
+            ul(class="errors createNewArtist")
+              li(ng-repeat="error in errors.createNewArtist")
+                label {{error}}
     div(id="content-container")  
       h1{ Content }  
     div(id="right-sidebar")  
