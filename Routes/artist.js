@@ -40,7 +40,8 @@ exports.updateartist = function(req, res) {
       {
         artist.updateAttributes({
           name: req.body.name,
-          genreId: req.body.genreId
+          genreId: req.body.genreId,
+          imageUrl: req.body.imageUrl
         })
       })
       .success(function(artist)

@@ -6,6 +6,7 @@ var artist = require('./Routes/artist.js');
 var artistAlbum = require('./Routes/artistAlbum.js');
 var album = require('./Routes/album.js');
 var view = require('./Routes/view.js');
+var metaData = require('./Routes/metaData.js');
 var db = require('./models'); 
 var path = require('path'); 
 
@@ -16,7 +17,7 @@ app.use(express.methodOverride());
 //app.use(express.bodyParser());
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 //set path to static files
 app.use(express.static(__dirname + '/../public'));
@@ -31,11 +32,14 @@ nconf.file('./Configuration/settings.json');
 
 //Views 
 app.get('/', view.index);
-app.get('/partials/:name', view.partials);
+app.get('/views/partials/:name', view.partials);
 app.get('/views/scripts/:name', view.scripts);
 app.get('/images/:name', view.images);
+app.get('/styles/:name', view.styles);
 
 //REST actions
+app.get('/metaData', metaData.getMetaData);
+
 app.get('/genres', genre.getgenres);
 app.get('/genres/:genreId', genre.getgenre);
 app.post('/genres', genre.creategenre);
@@ -54,10 +58,10 @@ app.post('/albums', album.createalbum);
 app.put('/albums/:albumId', album.updatealbum);
 app.delete('/albums/:albumId', album.deletealbum);
 
-app.get('/artistalbum/artistid/:artistid', artistAlbum.getalbums_forartist);
-app.get('/artistalbum/albumid/:albumid', artistAlbum.getartists_foralbum);
-app.post('/artistalbum/artistid/:artistid/albumid/:albumid', artistAlbum.createartistalbum);
-app.delete('/artistalbum/artistid/:artistid/albumid/:albumid', artistAlbum.deleteartistalbum);
+app.get('/artistalbum/artist/:artistid', artistAlbum.getalbums_forartist);
+app.get('/artistalbum/album/:albumid', artistAlbum.getartists_foralbum);
+app.post('/artistalbum/artist/:artistid/album/:albumid', artistAlbum.createartistalbum);
+app.delete('/artistalbum/artist/:artistid/album/:albumid', artistAlbum.deleteartistalbum);
 
 db.sequelize.sync().complete(function(err) {
   if (err) {
