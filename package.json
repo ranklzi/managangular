@@ -1,0 +1,35 @@
+{
+  "name": "managangular",
+  "version": "1.0.0",
+  "description": "first version to heroku",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "angular": "~1.2.10",
+    "bower": "~1.3.1",
+    "jade": "~1.3.0",
+    "express": "~3.4.8",
+    "nconf": "~0.6.9",
+    "jake": "~0.7.9",
+    "path": "~0.4.9",
+    "mysql": "~2.1.1",
+    "pg": "~2.11.1",
+    "sequelize": "~1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ranklzi/managangular.git"
+  },
+  "author": "Ran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ranklzi/managangular/issues"
+  },
+  "homepage": "https://github.com/ranklzi/managangular"
+}
