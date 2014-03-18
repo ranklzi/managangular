@@ -49,13 +49,13 @@ function ArtistsListCtrl($scope, $http)
   			});
 	};
 
-	validateCreateNewArtist = function(artistName, artistImageUrl, newArtistGenreId){
+	validateCreateNewArtist = function(artistName, artistImageUrl, artistGenreId){
 		$scope.errors.createNewArtist.length = 0;
 		if (artistName == undefined || artistName == null)
 		{
 			$scope.errors.createNewArtist.push('Add a value to artist name field.');
 		}
-		if (newArtistGenreId == undefined || newArtistGenreId == null)// || !angular.isNumber(newArtistGenreId)
+		if (artistGenreId == undefined || artistGenreId == null)
 		{
 			$scope.errors.createNewArtist.push('Select Genre for the new artist.');
 		}
