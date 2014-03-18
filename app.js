@@ -69,7 +69,8 @@ db.sequelize.sync().complete(function(err) {
     throw err
   } else {
   	console.log('sequelize completed');
-    app.listen(nconf.get('port'), function(){
+    //app.listen(nconf.get('port'), function(){
+      app.listen($PORT, function(){
       console.log('Express server listening on port ' + nconf.get('port'));
     });
   }
