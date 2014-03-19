@@ -63,7 +63,7 @@ app.get('/artistalbum/album/:albumid', artistAlbum.getartists_foralbum);
 app.post('/artistalbum/artist/:artistid/album/:albumid', artistAlbum.createartistalbum);
 app.delete('/artistalbum/artist/:artistid/album/:albumid', artistAlbum.deleteartistalbum);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || nconf.get('port');
 
 db.sequelize.sync().complete(function(err) {
   if (err) {
@@ -71,8 +71,7 @@ db.sequelize.sync().complete(function(err) {
     throw err
   } else {
   	console.log('sequelize completed');
-      //app.listen(nconf.get('port'), function(){
-      app.listen(3000, function(){
+      app.listen(port, function(){
       console.log('Express server listening on port ' + nconf.get('port'));
     });
   }
