@@ -3,8 +3,10 @@ html(ng-app='artistsManagerApp')
     title My Site
     script(src='/views/scripts/angular.js')
     script(src='/views/scripts/angular-route.js')
+    script(src='/views/scripts/angular-resource.js')
     script(src='/views/scripts/app.js')
     script(src='/views/scripts/controllers.js')
+    script(src='/views/scripts/services.js')
     link(rel='stylesheet', href='/styles/app.css')
   body
     h1
@@ -15,21 +17,23 @@ html(ng-app='artistsManagerApp')
       h1{ Top Navigation }  
     div(style="clear: both")  
     div(id="left-sidebar")
-      h1{ Left Sidebar }
       div(ng-controller="ArtistsListCtrl" class="artistsPane")
-        div(class="artistsPane genre")
-          label Genre
-          select(ng-model="genre" ng-options="g.name for g in metaData.genres")
-            option(value="") -- choose genre --
-        div(class="artistsPane searchbox")
-          label Search
-          input(ng-model="query")
-          input(type="button" value="Refresh")
+        div(class="artistsPane searchInput") 
+          div(class="artistsPane genre")
+            label Genre
+            select(ng-model="genre" ng-options="g.name for g in metaData.genres")
+              option(value="") -- choose genre --
+          div(class="artistsPane searchbox")
+            label Search
+            input(ng-model="query")
         div
           ul(class="artistsPane list")
             li(class="artistsPane listItem" ng-repeat="artist in artists | filter:query | filter:{genreId:genre.id} | orderBy:artistsOrderProp") 
-              a(href="" ng-click="getAlbums(artist)") {{artist.name}}
-                img(ng-src="{{artist.imageUrl}}" style="width:60px;")
+              a(href="" ng-click="artistSelected(artist)")
+                div
+                  span {{artist.name}}
+                  img(ng-src="{{artist.imageUrl}}" style="width:60px;")
+                  div(class="clearFloat")
         div(class="artistsPane updateExisting" ng-hide="selectedArtist == null")
           h4 Update {{selectedArtist.name}}
           label Image Url
@@ -37,19 +41,23 @@ html(ng-app='artistsManagerApp')
           input(type="button" value="Update" ng-click="updateArtist(existingArtistImageUrl)")
         div(class="artistsPane createNew") 
           h4 Create New
-          label Artist Name
-          input(ng-model="newArtistName")
-          label Image Url
-          input(ng-model="newArtistImageUrl")
-          select(ng-model="newArtistGenreId" ng-options="g.name for g in metaData.genres")
-            option(value="") -- choose genre --
-          input(type="button" value="Create" ng-click="createNewArtist(newArtistName, newArtistImageUrl, newArtistGenreId)")
+          div
+            label Artist Name
+            input(ng-model="newArtistName")
+          div
+            label Image Url
+            input(ng-model="newArtistImageUrl")
+          div
+            select(ng-model="newArtistGenreId" ng-options="g.name for g in metaData.genres")
+              option(value="") -- choose genre --
+            input(type="button" value="Create" ng-click="createNewArtist(newArtistName, newArtistImageUrl, newArtistGenreId)")
           span(class="paneError" ng-hide="!errors || !errors.createNewArtist || errors.createNewArtist.length == 0")
             ul(class="errors createNewArtist")
               li(ng-repeat="error in errors.createNewArtist")
                 label {{error}}
     div(id="content-container")  
-      h1{ Content }  
+      h1{ Content }
+      div(ng-controller="AlbumsListCtrl")  
     div(id="right-sidebar")  
       h1{ Right Sidebar }  
     div(style="clear: both")

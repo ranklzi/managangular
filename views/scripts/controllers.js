@@ -1,6 +1,6 @@
 var artistsManagerControllers = angular.module('artistsManagerControllers', []);
 
-function ArtistsListCtrl($scope, $http)
+function ArtistsListCtrl($scope, $rootScope, $http, artistFactory)
 {
 	$scope.selectedArtist = null;
 	$scope.errors = new Object();
@@ -14,18 +14,12 @@ function ArtistsListCtrl($scope, $http)
 			alert ('error: ' + status)
   		});
 
-	$http.get('/artists').
-		success(function(data){
-			$scope.artists =  data;
-  		}).
-  		error (function(data, status, headers, config){
-			alert ('error: ' + status)
-  		});
+	$scope.artists = artistFactory.getAll();
 	$scope.artistsOrderProp = 'name';
 
-
-	$scope.getAlbums = function (artist) {
+	$scope.artistSelected = function (artist) {
 		$scope.selectedArtist = artist; 
+		$rootScope.$broadcast('artistSelected');
 	};
 
 	$scope.createNewArtist = function (artistName, artistImageUrl, newArtistGenreId) {
@@ -34,19 +28,11 @@ function ArtistsListCtrl($scope, $http)
 		{
 			return;
 		}
-
-		$http.post('/artists', 
-			{ 
+		$scope.artists.push(artistFactory.create({ 
 				name: artistName, 
 				genreId: newArtistGenreId.id,
 				imageUrl: artistImageUrl
-			}).
-			success(function(data){
-				$scope.artists.push(data);
-			}).
-			error (function(data, status, headers, config){
-				alert ('error: ' + status)
-  			});
+			}));
 	};
 
 	validateCreateNewArtist = function(artistName, artistImageUrl, artistGenreId){
@@ -64,17 +50,21 @@ function ArtistsListCtrl($scope, $http)
 	$scope.updateArtist = function (updatedArtistImageUrl) {
 		var tmpSelectedArtist = $scope.selectedArtist;
 		tmpSelectedArtist.imageUrl = updatedArtistImageUrl;
-		$http.put('/artists/' + tmpSelectedArtist.id, tmpSelectedArtist 
-			).
-			success(function(data){
-				alert('updated');
-			}).
-			error (function(data, status, headers, config){
-				alert ('error: ' + status)
-  			});
+
+		artistFactory.update(tmpSelectedArtist);
 	};
 
 } 
-artistsManagerControllers.controller('ArtistsListCtrl', ['$scope', '$http', ArtistsListCtrl]);
+artistsManagerControllers.controller('ArtistsListCtrl', ['$scope', '$rootScope', '$http', 'artistFactory', ArtistsListCtrl]);
 
+function AlbumsListCtrl($scope, $http)
+{
+	$scope.$on('artistSelected', function() {
+        
+    });  
 
+	$scope.getAlbumsForArtist = function () {
+		alert('getAlbumsForArtist');
+	};
+}
+artistsManagerControllers.controller('AlbumsListCtrl', ['$scope', '$http', AlbumsListCtrl]);

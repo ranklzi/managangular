@@ -72,7 +72,7 @@ db.sequelize.sync().complete(function(err) {
   } else {
   	console.log('sequelize completed');
       //app.listen(nconf.get('port'), function(){
-      app.listen(port, function(){
+      app.listen(3000, function(){
       console.log('Express server listening on port ' + nconf.get('port'));
     });
   }

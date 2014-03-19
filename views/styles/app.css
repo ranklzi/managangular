@@ -1,14 +1,15 @@
 /* html body tag style */  
 body {  
     margin: 0px;  
-    padding: 0px;  
+    padding: 0px; 
+    background-color: #E9EAED; 
 }  
   
 /* h1 tag style */  
 h1 {  
     margin: 0px;  
     padding: 0px;  
-    font-family: arial;  
+    font-family: tahoma;  
     font-size: 140%;  
 }  
   
@@ -24,7 +25,7 @@ h1 {
 /* footer CSS Style Rule */  
 
 div{
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 #header {  
     width: 990px;  
@@ -53,7 +54,8 @@ div{
     width: 250px;  
     /*height: 400px;*/  
     margin: 2px 2px 2px 0px;  
-    float: left;  
+    float: left;
+    border: solid 1px grey;
 }  
   
 /* right sidebar that is the right side column of */  
@@ -67,19 +69,65 @@ div{
   
 /* Top navigation CSS Style Rule */  
 #top-Nav {  
-    width: 990px;  
+    width: 100%;
+    background-color: #46629E;
+    }  
 /* 
     end of main divs table 
 */
-.artistsPane {
-    font-size: 55px;
-    background-color: red;
+.clearFloat
+{
+    clear:both;
 }
-.createNew {
-    font-size: 55px;
-    background-color: red;
+.artistsPane {
+    font-size: 15px;
+}
+.artistsPane.searchInput {
+    font-size: 15px;
+    border: solid grey 1px;
+}
+.artistsPane.genre
+{
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+}
+.artistsPane.searchbox
+{
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+}
+.artistsPane label
+{
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+}
+.artistsPane.list
+{
+    list-style-type: none;
+}
+.artistsPane.listItem{
+    background-color: white;
+    width:100%;
+    border-radius: 10px/30px;
+    border: solid grey 1px;
+}
+.artistsPane.listItem img{
+    float: right;
+    padding: 5px 5px 5px 5px;
+}
+.artistsPane.listItem span{
+    float:  ;
+    padding: 5px 5px 5px 5px;
 }
 .artistsPane.createNew {
-    font-size: 55px;
-    background-color: red;
+    border: solid grey 1px;
+    text-align: center;
+}
+.artistsPane.updateExisting {
+    border: solid grey 1px;
+    text-align: center;
+}
+.errors
+{
+    color: red;
 }
